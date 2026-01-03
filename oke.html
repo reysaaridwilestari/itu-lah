@@ -109,14 +109,17 @@
             <div class="message">
                 Setiap tahun kamu membuktikan bahwa hidup tidak selalu harus sempurna untuk tetap berarti. Semoga kebahagiaan selalu menemukanmu.
             </div>
-            <div class="signature">- Dari Temanmu -</div>
+            <div class="signature">- Happy Sweet Seventeen -</div>
         </div>
     </div>
 
     <script>
-        // Palet warna warni super lengkap
-        const rainbowColors = ['#ff0000', '#ffa500', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#ee82ee', '#ff00ff', '#00ffff', '#ff4081', '#76ff03', '#d500f9'];
+        // Palet warna konfeti: Pink, Biru, Kuning saja
+        const selectedConfettiColors = ['#ff69b4', '#1e90ff', '#ffd700']; 
+        
+        // Palet warna balon tetap sama agar bervariasi
         const balloonColors = ['#ff4081', '#00e5ff', '#ffea00', '#76ff03', '#d500f9', '#ff3d00'];
+        
         const music = document.getElementById('bdayMusic');
         const card = document.getElementById('card');
         const hint = document.getElementById('hint');
@@ -136,8 +139,9 @@
             oscillator.start(); oscillator.stop(context.currentTime + 0.1);
         }
 
+        // Fungsi Konfeti Ledakan Selebrasi (Bukan Nonstop)
         function celebrate() {
-            const end = Date.now() + (1.5 * 1000); // DURASI 3 DETIK
+            const end = Date.now() + (1.5 * 1000); // Durasi 3 detik
 
             (function frame() {
                 confetti({
@@ -145,14 +149,14 @@
                     angle: 60,
                     spread: 60,
                     origin: { x: 0, y: 0.65 },
-                    colors: rainbowColors
+                    colors: selectedConfettiColors // Menggunakan palet yang dipilih
                 });
                 confetti({
                     particleCount: 4,
                     angle: 120,
                     spread: 60,
                     origin: { x: 1, y: 0.65 },
-                    colors: rainbowColors
+                    colors: selectedConfettiColors // Menggunakan palet yang dipilih
                 });
 
                 if (Date.now() < end) {
