@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>yaitu</title>
+    <title>Birthday Surprise! 🎈</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap');
@@ -92,7 +92,7 @@
 </head>
 <body>
 
-    <div class="instruction" id="hint">🎈 PECAHKAN BALONNYA!!!</div>
+    <div class="instruction" id="hint">🎈 PECAHKAN BALONNYA!</div>
 
     <audio id="bdayMusic" loop>
         <source src="https://files.catbox.moe/9d7hp4.mp3" type="audio/mpeg">
@@ -109,20 +109,14 @@
             <div class="message">
                 Setiap tahun kamu membuktikan bahwa hidup tidak selalu harus sempurna untuk tetap berarti. Semoga kebahagiaan selalu menemukanmu.
             </div>
-            <div class="signature">- Happy Sweet Seventeen -</div>
+            <div class="signature">- Dari Temanmu -</div>
         </div>
     </div>
 
     <script>
-        // Palet warna warni yang lebih cerah dan banyak
-        const confettiColors = [
-            '#ff0000', '#00ff00', '#0000ff', '#ffff00', 
-            '#ff00ff', '#00ffff', '#ffa500', '#ff4081', 
-            '#76ff03', '#d500f9', '#3d5afe', '#ffeb3b'
-        ];
-        
+        // Palet warna warni super lengkap
+        const rainbowColors = ['#ff0000', '#ffa500', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#ee82ee', '#ff00ff', '#00ffff', '#ff4081', '#76ff03', '#d500f9'];
         const balloonColors = ['#ff4081', '#00e5ff', '#ffea00', '#76ff03', '#d500f9', '#ff3d00'];
-        
         const music = document.getElementById('bdayMusic');
         const card = document.getElementById('card');
         const hint = document.getElementById('hint');
@@ -139,52 +133,47 @@
             gain.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.1);
             oscillator.connect(gain);
             gain.connect(context.destination);
-            oscillator.start();
-            oscillator.stop(context.currentTime + 0.1);
+            oscillator.start(); oscillator.stop(context.currentTime + 0.1);
         }
 
-        // Fungsi Konfeti NONSTOP dengan warna warni random
-        function launchConfettiNonstop() {
-            if (!isCardOpen) return;
+        function celebrate() {
+            const end = Date.now() + (1.5 * 1000); // DURASI 3 DETIK
 
-            confetti({
-                particleCount: 3,
-                angle: 60,
-                spread: 70,
-                origin: { x: 0, y: 0.7 },
-                colors: confettiColors, // Menggunakan palet pelangi
-                ticks: 200
-            });
-            confetti({
-                particleCount: 3,
-                angle: 120,
-                spread: 70,
-                origin: { x: 1, y: 0.7 },
-                colors: confettiColors, // Menggunakan palet pelangi
-                ticks: 200
-            });
+            (function frame() {
+                confetti({
+                    particleCount: 4,
+                    angle: 60,
+                    spread: 60,
+                    origin: { x: 0, y: 0.65 },
+                    colors: rainbowColors
+                });
+                confetti({
+                    particleCount: 4,
+                    angle: 120,
+                    spread: 60,
+                    origin: { x: 1, y: 0.65 },
+                    colors: rainbowColors
+                });
 
-            requestAnimationFrame(launchConfettiNonstop);
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
         }
 
         function createBalloon() {
             if (isCardOpen) return;
-
             const wrapper = document.createElement('div');
             wrapper.className = 'balloon-wrapper';
             wrapper.style.left = Math.random() * (window.innerWidth - 90) + 'px';
-            
             const duration = Math.random() * 2 + 3;
             wrapper.style.animationDuration = duration + 's';
-
             const color = balloonColors[Math.floor(Math.random() * balloonColors.length)];
-
             wrapper.innerHTML = `
                 <div class="balloon" style="--bg-color: ${color}"></div>
                 <svg class="wavy-string" viewBox="0 0 20 100">
                     <path d="M10,0 Q15,25 10,50 T10,100" stroke="rgba(0,0,0,0.2)" stroke-width="2" fill="none" />
-                </svg>
-            `;
+                </svg>`;
 
             wrapper.onclick = () => {
                 isCardOpen = true;
@@ -192,12 +181,9 @@
                 hint.style.display = 'none';
                 document.querySelectorAll('.balloon-wrapper').forEach(el => el.remove());
                 card.style.display = 'block';
-                
-                launchConfettiNonstop();
-                
+                celebrate();
                 try { music.play(); } catch(e) {}
             };
-
             document.body.appendChild(wrapper);
             setTimeout(() => { if(wrapper.parentNode) wrapper.remove(); }, duration * 1000);
         }
