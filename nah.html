@@ -63,6 +63,18 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.3); z-index: 100;
             overflow-y: auto; animation: popCard 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
             scrollbar-width: none;
+            position: fixed;
+        }
+
+        .ribbon-emoji {
+            position: absolute;
+            top: -10px;        /* Mengatur jarak dari atas */
+            right: -10px;      /* Mengatur jarak dari kanan */
+            font-size: 50px;   /* Mengatur ukuran pita */
+            z-index: 110;      /* Agar berada di atas semua elemen kartu */
+            transform: rotate(15deg); /* Membuat posisi pita miring */
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2)); /* Memberi efek bayangan tipis */
+            pointer-events: none; /* Agar tidak menghalangi klik jika tertumpuk */
         }
 
         @keyframes popCard {
@@ -100,9 +112,10 @@
     </audio>
 
     <div id="card">
+      <div class="ribbon emoji"></div>
         <div class="photo-section">
             <div class="photo-frame">
-                <img src="https://i.ibb.co.com/jvwTQkf0/IMG-2374.jpg">
+                <img src="https://i.ibb.co.com/kT6pgDn/397d6afc-42cf-4476-96c8-4f6fa334bc64.jpg">
             </div>
         </div>
         <div class="card-body">
